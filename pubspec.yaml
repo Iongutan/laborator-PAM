@@ -1,5 +1,5 @@
 name: discount_calculator
-description: Aplicatie Flutter de fitness - design Figma, varianta 3
+description: Aplicatie Flutter de fitness - Laborator 3 (BLoC/Cubit, JSON asincron)
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -11,18 +11,22 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.10
+  flutter_bloc: ^9.1.1
+  equatable: ^3.0.0
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  bloc_test: ^10.0.0
 
 flutter:
   uses-material-design: true
 
   assets:
+    - assets/data/
     - assets/icons/
-    - assets/images/
 
   fonts:
     - family: PlusJakartaSans

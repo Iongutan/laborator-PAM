@@ -1,59 +1,76 @@
-# Fitness — Laborator PAM (design Figma, varianta 3)
+# Fitness — Laborator PAM nr. 3 (varianta 3)
 
-Aplicație Flutter care implementează designul din Figma
-**„Laboratoare 2026” → pagina V3**, cu ambele ecrane:
+Aplicație Flutter cu **State Management (BLoC / Cubit)** și **programare asincronă**.
+Datele sunt în fișierul JSON inclus în proiect (`assets/data/lab_v3.json`) și se încarcă asincron.
+Designul este cel din Figma „Laboratoare 2026” → pagina **V3** (ecranele `21. Home v2` și `30. Fitness`).
 
-| Ecran Figma | Fișier |
+## Cerințele laboratorului și unde sunt implementate
+
+| Cerință | Implementare |
 |---|---|
-| `21. Home v2` | `lib/screens/home_screen.dart` |
-| `30. Fitness` | `lib/screens/gym_detail_screen.dart` |
+| Package de state management | `flutter_bloc` — Cubit-uri în `lib/logic/` |
+| Date într-un fișier JSON inclus în proiect | `assets/data/lab_v3.json` |
+| Încărcare asincronă | `FitnessRepository` (`Future`, `async/await`, `rootBundle.loadString`, `jsonDecode`) |
+| Modelarea datelor | `lib/data/models/` — clase cu `fromJson` și `Equatable` |
+| Stările Loading / Success / Empty / Error | `LoadStatus` + `LoadingView` / `MessageView.empty` / `MessageView.error` (cu „Try again”) |
+| Listă de elemente | Featured Plans, Workout Programs (grilă) |
+| Căutare | ecranul „Workout Programs → See All” (`SearchField`) |
+| Filtrare | chip-urile All Type / Pilates / Cardio / Boxing / Yoga (pe Home și pe See All) |
+| Sortare | meniul „Sort”: Recommended, Name A–Z, Name Z–A, Calories, Duration |
+| Favorite (adăugare / eliminare) | inima de pe carduri + filtrul „doar favorite” (`FavoritesCubit`) |
+| Navigare către pagina de detalii | Start Now / tap pe program → pagina sălii (`GymDetailsScreen`) |
+| Componente UI reutilizabile | `lib/presentation/widgets/` |
 
-## Ce conține fiecare ecran
+## Arhitectura
 
-**Home**
-- Data curentă („Friday, 20 May”) și salut în funcție de oră (Good Morning / Afternoon / Evening).
-- Butonul de notificări (clopoțel cu punct roșu).
-- Cardul „Today’s Challenge — Running” cu inel de progres animat (15/20); la apăsare progresul crește.
-- „Featured Plan”: listă orizontală de carduri cu imagine, „5 week • 4x/week” și butonul **Start Now**.
-- „Workout Programs”: chip-uri de filtrare (All Type, Pilates, Cardio, Boxing, Yoga) și grila de programe
-  (Yoga, Arm Strengthening cu insigna **Pro**), cu kcal și minute.
-
-**Fitness (detalii sală)** — se deschide din **Start Now** sau apăsând un program
-- Imagine mare, buton înapoi semitransparent și meniul „⋮”.
-- Rating 4.5 (1,232 reviews), „Mid City Gym Training”, „California, New York”.
-- Descriere cu **Read more / Show less**.
-- „Amenities”: Showers, Lockers, Free Wi-fi.
-- Bara de jos: Total **$69.00 /week** și butonul **Reserve** (comută în „Reserved”).
-
-## Detalii de design respectate
-- Font **Plus Jakarta Sans** (Regular/Medium/SemiBold/Bold), inclus în `assets/fonts` (licență OFL).
-- Culorile din Figma în `lib/theme/app_colors.dart` (Primary `#22C55E`, Greyscale `#0D0D12`, `#818898`, `#DFE1E7` etc.).
-- Stilurile de text (H4, H6, Body…) în `lib/theme/app_text_styles.dart`, inclusiv letter-spacing -2%.
-- Iconițele sunt SVG-urile exportate direct din Figma (`assets/icons`), afișate cu `flutter_svg`.
-- Fotografiile sunt cele originale din Figma (`assets/images`), încadrate la fel ca în design.
-- Dimensiuni, spațieri și raze de colț luate din Figma (padding 24, carduri 296×144 și 184, raze 12/8/6).
-
-## Structura proiectului
 ```
 lib/
-├── main.dart                  <- aplicația + temă
-├── models/fitness_data.dart   <- modele și datele afișate
-├── screens/
-│   ├── home_screen.dart
-│   └── gym_detail_screen.dart
-├── theme/
-│   ├── app_colors.dart
-│   └── app_text_styles.dart
-└── widgets/                   <- componente reutilizabile (carduri, chip, butoane, inel progres)
-assets/
-├── fonts/  icons/  images/
-test/
-└── widget_test.dart           <- teste pentru ecrane și interacțiuni
+├── main.dart
+├── app.dart                       <- RepositoryProvider + BlocProvider-e globale
+├── core/
+│   ├── constants/app_icons.dart   <- iconițele SVG din Figma (rezervă)
+│   └── theme/                     <- culori și stiluri text din Figma
+├── data/
+│   ├── models/                    <- home_models.dart, gym_models.dart
+│   └── repositories/              <- fitness_repository.dart, svg_icon_cache.dart
+├── logic/                         <- State management (Cubit + State)
+│   ├── load_status.dart           <- initial / loading / success / empty / failure
+│   ├── home/                      <- HomeCubit: încărcare, filtru, challenge
+│   ├── programs/                  <- ProgramsCubit: căutare, filtru, sortare, favorite
+│   ├── favorites/                 <- FavoritesCubit: id-urile favorite (global)
+│   └── gym/                       <- GymDetailsCubit: detalii, Read more, Reserve
+└── presentation/
+    ├── navigation.dart
+    ├── screens/                   <- home, programs (See All), plans, gym_details
+    └── widgets/                   <- carduri, chip, butoane, inel progres, stări etc.
 ```
 
-## Cum rulezi proiectul
-1. Deschide folderul în Android Studio / VS Code.
-2. `flutter pub get`
-3. Pornește un emulator sau conectează un telefon și apasă **Run** (▶), sau `flutter run`.
+Fluxul datelor: **JSON → FitnessRepository (async) → Cubit → State → BlocBuilder → UI**.
 
-Teste: `flutter test`
+## Ecranele
+- **Home** — data și salutul din JSON, notificări, „Today’s Challenge” (15/20, crește la apăsare),
+  Featured Plan (listă orizontală), Workout Programs cu filtre. Tragere în jos = reîncărcare.
+- **Workout Programs (See All)** — căutare, filtre, sortare, favorite, număr de rezultate, stare goală cu „Clear filters”.
+- **Featured Plans (See All)** — toate planurile.
+- **Detalii sală** (a doua pagină, după JSON) — imagine, rating 4.5 (1,232 reviews), descriere cu Read more,
+  Amenities (Showers, Lockers), Total $69.00 /week și butonul Reserve.
+
+## Observații
+- Imaginile și iconițele vin din URL-urile din JSON (Unsplash, Iconify). Fără internet, imaginile arată un
+  placeholder, iar iconițele trec automat pe iconițele locale exportate din Figma.
+- JSON-ul nu are câmp de categorie pentru programe, așa că un program aparține unui filtru dacă titlul
+  conține numele filtrului (ex.: „Cardio Training” → Cardio). Pilates și Boxing nu au programe → se vede starea Empty.
+- `FitnessRepository` are o întârziere de 0,8 s ca să se vadă starea Loading.
+
+## Rulare
+```
+flutter pub get
+flutter run
+```
+
+## Teste
+```
+flutter test
+```
+Teste pentru: citirea JSON-ului, filtrare/căutare/sortare, toate Cubit-urile (`bloc_test`,
+inclusiv stările Loading/Success/Empty/Error) și fluxurile din interfață.

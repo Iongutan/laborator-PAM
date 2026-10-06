@@ -1,0 +1,160 @@
+{
+  "fitnessHomePage": {
+    "header": {
+      "date": "Friday, 20 May",
+      "greeting": "Good Morning",
+      "notification": {
+        "hasUnread": true,
+        "iconUrl": "https://api.iconify.design/mdi/bell-outline.svg?color=%23101115&width=32"
+      }
+    },
+    "todaysChallenge": {
+      "title": "Today's Challenge",
+      "activity": "Running",
+      "completed": 15,
+      "total": 20,
+      "progress": 0.75,
+      "iconUrl": "https://api.iconify.design/mdi/run.svg?color=%2320C766&width=32"
+    },
+    "featuredPlans": [
+      {
+        "id": "fp001",
+        "title": "Massive Upper Body",
+        "duration": "5 week",
+        "frequency": "4x/week",
+        "actionLabel": "Start Now",
+        "imageUrl": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=85",
+        "metaIcons": {
+          "durationIconUrl": "https://api.iconify.design/mdi/calendar-week.svg?color=%23FFFFFF&width=20",
+          "frequencyIconUrl": "https://api.iconify.design/mdi/dumbbell.svg?color=%23FFFFFF&width=20"
+        }
+      },
+      {
+        "id": "fp002",
+        "title": "Strong & Fit",
+        "duration": "6 week",
+        "frequency": "3x/week",
+        "actionLabel": "Start Now",
+        "imageUrl": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1a?auto=format&fit=crop&w=1000&q=85",
+        "metaIcons": {
+          "durationIconUrl": "https://api.iconify.design/mdi/calendar-week.svg?color=%23FFFFFF&width=20",
+          "frequencyIconUrl": "https://api.iconify.design/mdi/dumbbell.svg?color=%23FFFFFF&width=20"
+        }
+      }
+    ],
+    "workoutPrograms": {
+      "filters": [
+        {
+          "id": "all",
+          "name": "All Type",
+          "selected": true
+        },
+        {
+          "id": "pilates",
+          "name": "Pilates",
+          "selected": false
+        },
+        {
+          "id": "cardio",
+          "name": "Cardio",
+          "selected": false
+        },
+        {
+          "id": "boxing",
+          "name": "Boxing",
+          "selected": false
+        },
+        {
+          "id": "yoga",
+          "name": "Yoga",
+          "selected": false
+        }
+      ],
+      "filterIconUrls": {
+        "all": "https://api.iconify.design/mdi/view-grid-outline.svg?color=%23FFFFFF&width=20",
+        "pilates": "https://api.iconify.design/mdi/yoga.svg?color=%236E7787&width=20",
+        "cardio": "https://api.iconify.design/mdi/heart-pulse.svg?color=%236E7787&width=20",
+        "boxing": "https://api.iconify.design/mdi/boxing-glove.svg?color=%236E7787&width=20",
+        "yoga": "https://api.iconify.design/mdi/yoga.svg?color=%236E7787&width=20"
+      },
+      "items": [
+        {
+          "id": "wp001",
+          "title": "Yoga",
+          "calories": 210,
+          "durationMinutes": 120,
+          "isPro": false,
+          "imageUrl": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=85",
+          "icons": {
+            "caloriesIconUrl": "https://api.iconify.design/mdi/fire.svg?color=%23FFFFFF&width=18",
+            "durationIconUrl": "https://api.iconify.design/mdi/clock-outline.svg?color=%23FFFFFF&width=18"
+          }
+        },
+        {
+          "id": "wp002",
+          "title": "Arm Strengthening",
+          "calories": 210,
+          "durationMinutes": 120,
+          "isPro": true,
+          "imageUrl": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=85",
+          "icons": {
+            "caloriesIconUrl": "https://api.iconify.design/mdi/fire.svg?color=%23FFFFFF&width=18",
+            "durationIconUrl": "https://api.iconify.design/mdi/clock-outline.svg?color=%23FFFFFF&width=18",
+            "proIconUrl": "https://api.iconify.design/mdi/crown-outline.svg?color=%2320C766&width=20"
+          }
+        },
+        {
+          "id": "wp003",
+          "title": "Cardio Training",
+          "calories": 260,
+          "durationMinutes": 45,
+          "isPro": false,
+          "imageUrl": "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=600&q=85",
+          "icons": {
+            "caloriesIconUrl": "https://api.iconify.design/mdi/fire.svg?color=%23FFFFFF&width=18",
+            "durationIconUrl": "https://api.iconify.design/mdi/clock-outline.svg?color=%23FFFFFF&width=18"
+          }
+        }
+      ]
+    }
+  },
+  "fitnessGymDetailsPage": {
+    "gym": {
+      "id": "gym001",
+      "name": "Mid City Gym Training",
+      "location": "California, New York",
+      "heroImageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=90",
+      "rating": 4.5,
+      "reviewCount": 1232,
+      "description": "Lorem ipsum dolor sit amet consectetur. Blandit vitae aliquet eros laoreet quam sollicitudin. Duis non euhabitant id vel nisi eget amet tellus...",
+      "descriptionExpanded": false,
+      "amenities": [
+        {
+          "id": "showers",
+          "name": "Showers",
+          "iconUrl": "https://api.iconify.design/mdi/shower-head.svg?color=%23808A9B&width=28"
+        },
+        {
+          "id": "lockers",
+          "name": "Lockers",
+          "iconUrl": "https://api.iconify.design/mdi/locker-multiple.svg?color=%23808A9B&width=28"
+        }
+      ],
+      "pricing": {
+        "amount": 69.0,
+        "currency": "USD",
+        "period": "week",
+        "formatted": "$69.00 /week"
+      }
+    },
+    "actions": {
+      "backIconUrl": "https://api.iconify.design/mdi/arrow-left.svg?color=%23FFFFFF&width=32",
+      "moreIconUrl": "https://api.iconify.design/mdi/dots-vertical.svg?color=%23FFFFFF&width=28",
+      "ratingIconUrl": "https://api.iconify.design/mdi/star.svg?color=%23FFB52E&width=20",
+      "reserve": {
+        "label": "Reserve",
+        "enabled": true
+      }
+    }
+  }
+}
