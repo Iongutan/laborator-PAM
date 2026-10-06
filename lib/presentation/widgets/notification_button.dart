@@ -36,7 +36,7 @@ class NotificationButton extends StatelessWidget {
             children: [
               AppNetworkIcon(
                 url: iconUrl,
-                fallbackAsset: AppIcons.bell,
+                asset: AppIcons.bell,
                 size: 24,
                 color: AppColors.greyscale900,
               ),

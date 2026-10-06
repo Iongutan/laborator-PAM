@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_icons.dart';
+import '../../core/constants/app_images.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../data/models/home_models.dart';
@@ -28,6 +29,7 @@ class FeaturedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextStyle meta =
         AppTextStyles.xSmallRegular.copyWith(color: AppColors.greyscale0);
+    final FigmaImage? figmaImage = AppImages.forId(plan.id);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
@@ -35,19 +37,34 @@ class FeaturedCard extends StatelessWidget {
         width: width,
         height: height,
         child: Stack(
-          fit: StackFit.expand,
           children: [
-            AppNetworkImage(url: plan.imageUrl),
-            // Umbră spre stânga, ca textul alb să se citească pe orice poză.
-            const DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [Color(0xB30D0D12), Color(0x000D0D12)],
+            if (figmaImage != null)
+              // Ca în Figma: poza mărită la 115.5% × 158%, ancorată sus-stânga.
+              Positioned(
+                left: 0,
+                top: 0,
+                width: width * 1.155,
+                height: height * 1.58,
+                child: Image.asset(figmaImage.asset, fit: BoxFit.cover),
+              )
+            else ...[
+              Positioned.fill(
+                child: AppNetworkImage(id: plan.id, url: plan.imageUrl),
+              ),
+              // Poză care nu e în Figma: umbră spre stânga, ca textul alb
+              // să se citească.
+              const Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [Color(0xB30D0D12), Color(0x000D0D12)],
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -67,11 +84,7 @@ class FeaturedCard extends StatelessWidget {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          AppNetworkIcon(
-                            url: plan.durationIconUrl,
-                            fallbackAsset: AppIcons.barbell,
-                            size: 16,
-                          ),
+                          const AppNetworkIcon(asset: AppIcons.barbell, size: 16),
                           const SizedBox(width: 4),
                           Text(plan.duration, style: meta),
                           const SizedBox(width: 8),
@@ -84,12 +97,6 @@ class FeaturedCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          AppNetworkIcon(
-                            url: plan.frequencyIconUrl,
-                            fallbackAsset: AppIcons.barbell,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
                           Text(plan.frequency, style: meta),
                         ],
                       ),

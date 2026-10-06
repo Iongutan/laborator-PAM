@@ -39,7 +39,7 @@ class ProgramCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              AppNetworkImage(url: program.imageUrl),
+              AppNetworkImage(id: program.id, url: program.imageUrl),
               const DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -123,7 +123,7 @@ class _Meta extends StatelessWidget {
       children: [
         AppNetworkIcon(
           url: iconUrl,
-          fallbackAsset: fallback,
+          asset: fallback,
           size: 12,
           color: AppColors.greyscale200,
         ),
@@ -153,7 +153,7 @@ class _ProBadge extends StatelessWidget {
         children: [
           AppNetworkIcon(
             url: iconUrl,
-            fallbackAsset: AppIcons.crown,
+            asset: AppIcons.crown,
             size: 14,
             color: AppColors.primary500,
           ),

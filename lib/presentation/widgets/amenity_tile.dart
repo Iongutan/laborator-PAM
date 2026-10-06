@@ -12,12 +12,6 @@ class AmenityTile extends StatelessWidget {
 
   final Amenity amenity;
 
-  static String _fallbackFor(String id) => switch (id) {
-        'showers' => AppIcons.ironingSteam,
-        'lockers' => AppIcons.layoutList,
-        _ => AppIcons.wifi,
-      };
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +26,7 @@ class AmenityTile extends StatelessWidget {
         children: [
           AppNetworkIcon(
             url: amenity.iconUrl,
-            fallbackAsset: _fallbackFor(amenity.id),
+            asset: AppIcons.amenity(amenity.id),
             size: 20,
             color: AppColors.greyscale400,
           ),

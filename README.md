@@ -28,7 +28,7 @@ lib/
 ├── main.dart
 ├── app.dart                       <- RepositoryProvider + BlocProvider-e globale
 ├── core/
-│   ├── constants/app_icons.dart   <- iconițele SVG din Figma (rezervă)
+│   ├── constants/                 <- pozele și iconițele din Figma, după id-ul din JSON
 │   └── theme/                     <- culori și stiluri text din Figma
 ├── data/
 │   ├── models/                    <- home_models.dart, gym_models.dart
@@ -56,8 +56,10 @@ Fluxul datelor: **JSON → FitnessRepository (async) → Cubit → State → Blo
   Amenities (Showers, Lockers), Total $69.00 /week și butonul Reserve.
 
 ## Observații
-- Imaginile și iconițele vin din URL-urile din JSON (Unsplash, Iconify). Fără internet, imaginile arată un
-  placeholder, iar iconițele trec automat pe iconițele locale exportate din Figma.
+- Aspectul e cel din Figma: fotografiile și iconițele originale exportate din Figma (`assets/images`,
+  `assets/icons`) sunt asociate după id-ul din JSON (`core/constants/app_images.dart`, `app_icons.dart`).
+  Elementele care nu există în Figma (planul „Strong & Fit”, programul „Cardio Training”) folosesc imaginea
+  din URL-ul din JSON, încărcată asincron, cu stare de încărcare și de eroare.
 - JSON-ul nu are câmp de categorie pentru programe, așa că un program aparține unui filtru dacă titlul
   conține numele filtrului (ex.: „Cardio Training” → Cardio). Pilates și Boxing nu au programe → se vede starea Empty.
 - `FitnessRepository` are o întârziere de 0,8 s ca să se vadă starea Loading.

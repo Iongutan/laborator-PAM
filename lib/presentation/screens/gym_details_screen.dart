@@ -139,7 +139,7 @@ class _Hero extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          AppNetworkImage(url: gym.heroImageUrl),
+          AppNetworkImage(id: gym.id, url: gym.heroImageUrl),
           SafeArea(
             bottom: false,
             child: Padding(
@@ -166,7 +166,7 @@ class _Hero extends StatelessWidget {
                             alignment: Alignment.center,
                             child: AppNetworkIcon(
                               url: actions.backIconUrl,
-                              fallbackAsset: AppIcons.arrowLeft,
+                              asset: AppIcons.arrowLeft,
                               size: 24,
                               color: AppColors.greyscale25,
                             ),
@@ -177,7 +177,7 @@ class _Hero extends StatelessWidget {
                         onTap: () => showAppMessage(context, 'More options'),
                         child: AppNetworkIcon(
                           url: actions.moreIconUrl,
-                          fallbackAsset: AppIcons.dotsVertical,
+                          asset: AppIcons.dotsVertical,
                           size: 24,
                           color: AppColors.greyscale0,
                         ),
@@ -215,7 +215,7 @@ class _Info extends StatelessWidget {
             children: [
               AppNetworkIcon(
                 url: ratingIconUrl,
-                fallbackAsset: AppIcons.star,
+                asset: AppIcons.star,
                 size: 16,
                 color: AppColors.warning100,
               ),

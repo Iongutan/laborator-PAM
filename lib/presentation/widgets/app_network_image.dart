@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../../core/constants/app_images.dart';
 import '../../core/theme/app_colors.dart';
 
-/// Imagine din rețea (URL din JSON) cu stare de încărcare și de eroare.
+/// Imagine pentru un element din JSON: fotografia din Figma dacă există
+/// pentru [id], altfel imaginea din [url], cu stări de încărcare și eroare.
 class AppNetworkImage extends StatelessWidget {
   const AppNetworkImage({
     super.key,
+    required this.id,
     required this.url,
     this.fit = BoxFit.cover,
-    this.alignment = Alignment.center,
   });
 
+  final String id;
   final String url;
   final BoxFit fit;
-  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {
+    final FigmaImage? figma = AppImages.forId(id);
+    if (figma != null) {
+      return Image.asset(figma.asset, fit: fit, alignment: figma.alignment);
+    }
     if (url.isEmpty) return const _ImagePlaceholder(error: true);
     return Image.network(
       url,
       fit: fit,
-      alignment: alignment,
       loadingBuilder: (context, child, progress) =>
           progress == null ? child : const _ImagePlaceholder(),
       errorBuilder: (context, error, stack) =>

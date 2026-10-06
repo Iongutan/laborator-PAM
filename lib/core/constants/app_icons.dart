@@ -1,5 +1,5 @@
-/// Iconițele SVG exportate din Figma. Sunt folosite ca rezervă (fallback)
-/// când iconița din JSON nu se poate încărca din rețea.
+/// Iconițele SVG exportate din Figma. Au prioritate față de iconițele din
+/// JSON, ca aplicația să arate exact ca designul.
 class AppIcons {
   AppIcons._();
 
@@ -14,4 +14,12 @@ class AppIcons {
   static const String layoutList = 'assets/icons/layout_list.svg';
   static const String star = 'assets/icons/star.svg';
   static const String wifi = 'assets/icons/wifi.svg';
+
+  /// Iconițele facilităților din Figma, după id-ul din JSON.
+  static String? amenity(String id) => switch (id) {
+        'showers' => ironingSteam,
+        'lockers' => layoutList,
+        'wifi' => wifi,
+        _ => null,
+      };
 }
