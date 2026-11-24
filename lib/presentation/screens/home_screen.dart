@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../../data/models/home_models.dart';
-import '../../logic/home/home_cubit.dart';
-import '../../logic/home/home_state.dart';
-import '../../logic/load_status.dart';
+import '../../domain/entities/home_feed.dart';
+import '../cubits/home/home_cubit.dart';
+import '../cubits/home/home_state.dart';
+import '../cubits/load_status.dart';
 import '../navigation.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/featured_card.dart';
@@ -37,18 +37,18 @@ class HomeScreen extends StatelessWidget {
               switch (state.status) {
                 case LoadStatus.initial:
                 case LoadStatus.loading:
-                  return const LoadingView(message: 'Loading your workouts...');
+                  return const LoadingView(message: 'Loading from server...');
                 case LoadStatus.failure:
                   return MessageView.error(
                     message: state.errorMessage ?? 'Unknown error',
-                    onRetry: () => context.read<HomeCubit>().load(),
+                    onRetry: () => context.read<HomeCubit>().refresh(),
                   );
                 case LoadStatus.empty:
                   return MessageView.empty(
                     title: 'No workouts yet',
                     message: 'There are no plans or programs to show.',
                     actionLabel: 'Reload',
-                    onAction: () => context.read<HomeCubit>().load(),
+                    onAction: () => context.read<HomeCubit>().refresh(),
                   );
                 case LoadStatus.success:
                   return _HomeContent(state: state);
@@ -70,10 +70,10 @@ class _HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FitnessHome home = state.home!;
+    final HomeFeed home = state.home!;
     return RefreshIndicator(
       color: AppColors.primary500,
-      onRefresh: () => context.read<HomeCubit>().load(),
+      onRefresh: () => context.read<HomeCubit>().refresh(),
       child: ListView(
         padding: const EdgeInsets.only(top: 16, bottom: 17),
         children: [
@@ -227,7 +227,7 @@ class _ProgramsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FitnessHome home = state.home!;
+    final HomeFeed home = state.home!;
     final List<WorkoutProgram> programs = state.visiblePrograms;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

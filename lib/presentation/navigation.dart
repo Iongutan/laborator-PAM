@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/theme/app_colors.dart';
-import '../data/models/home_models.dart';
-import '../data/repositories/fitness_repository.dart';
-import '../logic/gym/gym_details_cubit.dart';
-import '../logic/programs/programs_cubit.dart';
+import '../domain/entities/home_feed.dart';
+import '../domain/usecases/get_gym_details.dart';
+import 'cubits/gym/gym_details_cubit.dart';
+import 'cubits/programs/programs_cubit.dart';
 import 'screens/gym_details_screen.dart';
 import 'screens/plans_screen.dart';
 import 'screens/programs_screen.dart';
@@ -13,11 +13,11 @@ import 'screens/programs_screen.dart';
 /// Navigarea între ecrane. Fiecare ecran primește Cubit-ul lui.
 
 void openGymDetails(BuildContext context) {
-  final FitnessRepository repository = context.read<FitnessRepository>();
+  final GetGymDetails getGymDetails = context.read<GetGymDetails>();
   Navigator.of(context).push(
     MaterialPageRoute<void>(
       builder: (_) => BlocProvider(
-        create: (_) => GymDetailsCubit(repository)..load(),
+        create: (_) => GymDetailsCubit(getGymDetails)..load(),
         child: const GymDetailsScreen(),
       ),
     ),
@@ -26,7 +26,7 @@ void openGymDetails(BuildContext context) {
 
 void openPrograms(
   BuildContext context, {
-  required FitnessHome home,
+  required HomeFeed home,
   required String filterId,
 }) {
   Navigator.of(context).push(

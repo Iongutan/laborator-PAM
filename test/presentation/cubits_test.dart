@@ -1,13 +1,16 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:discount_calculator/logic/favorites/favorites_cubit.dart';
-import 'package:discount_calculator/logic/gym/gym_details_cubit.dart';
-import 'package:discount_calculator/logic/gym/gym_details_state.dart';
-import 'package:discount_calculator/logic/home/home_cubit.dart';
-import 'package:discount_calculator/logic/home/home_state.dart';
-import 'package:discount_calculator/logic/load_status.dart';
-import 'package:discount_calculator/logic/programs/program_query.dart';
-import 'package:discount_calculator/logic/programs/programs_cubit.dart';
-import 'package:discount_calculator/logic/programs/programs_state.dart';
+import 'package:discount_calculator/core/error/failures.dart';
+import 'package:discount_calculator/domain/usecases/get_gym_details.dart';
+import 'package:discount_calculator/domain/usecases/get_home_feed.dart';
+import 'package:discount_calculator/presentation/cubits/favorites/favorites_cubit.dart';
+import 'package:discount_calculator/presentation/cubits/gym/gym_details_cubit.dart';
+import 'package:discount_calculator/presentation/cubits/gym/gym_details_state.dart';
+import 'package:discount_calculator/presentation/cubits/home/home_cubit.dart';
+import 'package:discount_calculator/presentation/cubits/home/home_state.dart';
+import 'package:discount_calculator/presentation/cubits/load_status.dart';
+import 'package:discount_calculator/domain/usecases/filter_programs.dart';
+import 'package:discount_calculator/presentation/cubits/programs/programs_cubit.dart';
+import 'package:discount_calculator/presentation/cubits/programs/programs_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/fakes.dart';
@@ -16,7 +19,7 @@ void main() {
   group('HomeCubit', () {
     blocTest<HomeCubit, HomeState>(
       'Loading → Success',
-      build: () => HomeCubit(FakeFitnessRepository()),
+      build: () => HomeCubit(GetHomeFeed(FakeFitnessRepository())),
       act: (c) => c.load(),
       expect: () => [
         isA<HomeState>().having((s) => s.status, 'status', LoadStatus.loading),
@@ -28,19 +31,19 @@ void main() {
 
     blocTest<HomeCubit, HomeState>(
       'Loading → Error',
-      build: () => HomeCubit(FakeFitnessRepository(fail: true)),
+      build: () => HomeCubit(GetHomeFeed(FakeFitnessRepository(failure: const NetworkFailure()))),
       act: (c) => c.load(),
       expect: () => [
         isA<HomeState>().having((s) => s.status, 'status', LoadStatus.loading),
         isA<HomeState>()
             .having((s) => s.status, 'status', LoadStatus.failure)
-            .having((s) => s.errorMessage, 'error', 'Network is down'),
+            .having((s) => s.errorMessage, 'error', const NetworkFailure().message),
       ],
     );
 
     blocTest<HomeCubit, HomeState>(
       'Loading → Empty',
-      build: () => HomeCubit(FakeFitnessRepository(empty: true)),
+      build: () => HomeCubit(GetHomeFeed(FakeFitnessRepository(empty: true))),
       act: (c) => c.load(),
       skip: 1,
       expect: () => [
@@ -50,7 +53,7 @@ void main() {
 
     blocTest<HomeCubit, HomeState>(
       'filtru + challenge',
-      build: () => HomeCubit(FakeFitnessRepository()),
+      build: () => HomeCubit(GetHomeFeed(FakeFitnessRepository())),
       act: (c) async {
         await c.load();
         c.selectFilter('cardio');
@@ -67,7 +70,7 @@ void main() {
   });
 
   group('ProgramsCubit', () {
-    final home = labHome();
+    final home = feedEntity();
     ProgramsCubit build() =>
         ProgramsCubit(programs: home.programs, filters: home.filters);
 
@@ -113,7 +116,7 @@ void main() {
   group('GymDetailsCubit', () {
     blocTest<GymDetailsCubit, GymDetailsState>(
       'încărcare, Read more, rezervare',
-      build: () => GymDetailsCubit(FakeFitnessRepository()),
+      build: () => GymDetailsCubit(GetGymDetails(FakeFitnessRepository())),
       act: (c) async {
         await c.load();
         c.toggleDescription();
@@ -133,7 +136,7 @@ void main() {
 
     blocTest<GymDetailsCubit, GymDetailsState>(
       'eroare',
-      build: () => GymDetailsCubit(FakeFitnessRepository(fail: true)),
+      build: () => GymDetailsCubit(GetGymDetails(FakeFitnessRepository(failure: const ServerFailure(500)))),
       act: (c) => c.load(),
       skip: 1,
       expect: () => [

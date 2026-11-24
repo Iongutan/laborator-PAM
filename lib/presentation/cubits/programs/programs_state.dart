@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import '../../data/models/home_models.dart';
-import 'program_query.dart';
+import '../../../domain/entities/home_feed.dart';
+import '../../../domain/usecases/filter_programs.dart';
 
 class ProgramsState extends Equatable {
   const ProgramsState({

@@ -1,5 +1,9 @@
 import 'package:discount_calculator/app.dart';
-import 'package:discount_calculator/data/repositories/fitness_repository.dart';
+import 'package:discount_calculator/core/error/failures.dart';
+import 'package:discount_calculator/data/datasources/fitness_remote_data_source.dart';
+import 'package:discount_calculator/data/repositories/fitness_repository_impl.dart';
+import 'package:discount_calculator/domain/repositories/fitness_repository.dart';
+import 'package:discount_calculator/injection_container.dart';
 import 'package:discount_calculator/presentation/screens/gym_details_screen.dart';
 import 'package:discount_calculator/presentation/screens/home_screen.dart';
 import 'package:discount_calculator/presentation/screens/programs_screen.dart';
@@ -13,15 +17,21 @@ void main() {
     tester.view.physicalSize = const Size(375 * 3, 812 * 3);
     tester.view.devicePixelRatio = 3;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(FitnessApp(repository: repo));
+    await tester.pumpWidget(
+        FitnessApp(dependencies: AppDependencies.withRepository(repo)));
   }
 
-  testWidgets('Home: Loading, apoi datele din JSON', (tester) async {
-    // Repository-ul real, care citește assets/data/lab_v3.json.
-    await pumpApp(
-        tester, FitnessRepository(latency: const Duration(milliseconds: 300)));
+  testWidgets('Home: Loading, apoi datele primite prin HTTP', (tester) async {
+    // Tot lanțul real: UI → Cubit → UseCase → RepositoryImpl → DataSource →
+    // ApiClient → http.Client (un server fals care răspunde cu JSON-ul API-ului).
+    final FitnessRepository repo = FitnessRepositoryImpl(
+      FitnessRemoteDataSourceImpl(
+        fakeApi(fakeServer(delay: const Duration(milliseconds: 300))),
+      ),
+    );
+    await pumpApp(tester, repo);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    expect(find.text('Loading your workouts...'), findsOneWidget);
+    expect(find.text('Loading from server...'), findsOneWidget);
 
     await tester.runAsync(
         () => Future<void>.delayed(const Duration(milliseconds: 500)));
@@ -37,14 +47,15 @@ void main() {
   });
 
   testWidgets('Home: Error + Try again', (tester) async {
-    final FakeFitnessRepository repo = FakeFitnessRepository(fail: true);
+    final FakeFitnessRepository repo =
+        FakeFitnessRepository(failure: const NetworkFailure());
     await pumpApp(tester, repo);
     await tester.pumpAndSettle();
 
     expect(find.text('Something went wrong'), findsOneWidget);
-    expect(find.text('Network is down'), findsOneWidget);
+    expect(find.text(const NetworkFailure().message), findsOneWidget);
 
-    repo.fail = false;
+    repo.failure = null;
     await tester.tap(find.text('Try again'));
     await tester.pumpAndSettle();
     expect(find.text('Good Morning'), findsOneWidget);

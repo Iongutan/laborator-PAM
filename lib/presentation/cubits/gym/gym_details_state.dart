@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../data/models/gym_models.dart';
+import '../../../domain/entities/gym_details.dart';
 import '../load_status.dart';
 
 class GymDetailsState extends Equatable {

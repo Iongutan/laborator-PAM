@@ -1,11 +1,11 @@
-import 'package:discount_calculator/data/models/home_models.dart';
-import 'package:discount_calculator/logic/programs/program_query.dart';
+import 'package:discount_calculator/domain/entities/home_feed.dart';
+import 'package:discount_calculator/domain/usecases/filter_programs.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/fakes.dart';
 
 void main() {
-  final FitnessHome home = labHome();
+  final HomeFeed home = feedEntity();
   ProgramFilter filter(String id) => home.filters.firstWhere((f) => f.id == id);
   List<String> titles(List<WorkoutProgram> l) => l.map((p) => p.title).toList();
 

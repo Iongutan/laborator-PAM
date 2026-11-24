@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/home_models.dart';
-import 'program_query.dart';
+import '../../../domain/entities/home_feed.dart';
+import '../../../domain/usecases/filter_programs.dart';
 import 'programs_state.dart';
 
 /// Căutare, filtrare, sortare și „doar favorite” pe ecranul cu toate programele.

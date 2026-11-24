@@ -4,7 +4,7 @@ import '../../core/constants/app_icons.dart';
 import '../../core/constants/app_images.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../../data/models/home_models.dart';
+import '../../domain/entities/home_feed.dart';
 import 'app_network_icon.dart';
 import 'app_network_image.dart';
 import 'primary_button.dart';

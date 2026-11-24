@@ -1,5 +1,5 @@
 name: discount_calculator
-description: Aplicatie Flutter de fitness - Laborator 3 (BLoC/Cubit, JSON asincron)
+description: Aplicatie Flutter de fitness - Laborator 4 (REST API, JSON Serialization, Clean Architecture)
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -14,18 +14,20 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^3.0.0
   http: ^1.6.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
   bloc_test: ^10.0.0
+  json_serializable: ^6.11.2
+  build_runner: ^2.7.1
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/data/
     - assets/icons/
     - assets/images/
 

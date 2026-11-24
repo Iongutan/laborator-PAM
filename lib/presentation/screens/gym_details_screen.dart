@@ -5,10 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/constants/app_icons.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../../data/models/gym_models.dart';
-import '../../logic/gym/gym_details_cubit.dart';
-import '../../logic/gym/gym_details_state.dart';
-import '../../logic/load_status.dart';
+import '../../domain/entities/gym_details.dart';
+import '../cubits/gym/gym_details_cubit.dart';
+import '../cubits/gym/gym_details_state.dart';
+import '../cubits/load_status.dart';
 import '../navigation.dart';
 import '../widgets/amenity_tile.dart';
 import '../widgets/app_network_icon.dart';
@@ -47,7 +47,7 @@ class GymDetailsScreen extends StatelessWidget {
               appBar: const SimpleTopBar(title: ''),
               body: MessageView.error(
                 message: state.errorMessage ?? 'Unknown error',
-                onRetry: () => context.read<GymDetailsCubit>().load(),
+                onRetry: () => context.read<GymDetailsCubit>().refresh(),
               ),
             );
           case LoadStatus.empty:

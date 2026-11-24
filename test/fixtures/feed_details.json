@@ -1,0 +1,39 @@
+{
+  "gym": {
+    "id": "gym001",
+    "name": "Mid City Gym Training",
+    "location": "California, New York",
+    "heroImageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=90",
+    "rating": 4.5,
+    "reviewCount": 1232,
+    "description": "Lorem ipsum dolor sit amet consectetur. Blandit vitae aliquet eros laoreet quam sollicitudin. Duis non euhabitant id vel nisi eget amet tellus...",
+    "descriptionExpanded": false,
+    "amenities": [
+      {
+        "id": "showers",
+        "name": "Showers",
+        "iconUrl": "https://api.iconify.design/mdi/shower-head.svg?color=%23808A9B&width=28"
+      },
+      {
+        "id": "lockers",
+        "name": "Lockers",
+        "iconUrl": "https://api.iconify.design/mdi/locker-multiple.svg?color=%23808A9B&width=28"
+      }
+    ],
+    "pricing": {
+      "amount": 69.0,
+      "currency": "USD",
+      "period": "week",
+      "formatted": "$69.00 /week"
+    }
+  },
+  "actions": {
+    "backIconUrl": "https://api.iconify.design/mdi/arrow-left.svg?color=%23FFFFFF&width=32",
+    "moreIconUrl": "https://api.iconify.design/mdi/dots-vertical.svg?color=%23FFFFFF&width=28",
+    "ratingIconUrl": "https://api.iconify.design/mdi/star.svg?color=%23FFB52E&width=20",
+    "reserve": {
+      "label": "Reserve",
+      "enabled": true
+    }
+  }
+}

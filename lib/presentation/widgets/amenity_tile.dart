@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_icons.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../../data/models/gym_models.dart';
+import '../../domain/entities/gym_details.dart';
 import 'app_network_icon.dart';
 
 /// Căsuța unei facilități a sălii (Showers, Lockers…).

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../data/repositories/svg_icon_cache.dart';
+import '../../core/network/svg_icon_cache.dart';
 
 /// Iconiță SVG: cea din Figma ([asset]) dacă există, altfel cea din
 /// URL-ul din JSON, încărcată asincron.

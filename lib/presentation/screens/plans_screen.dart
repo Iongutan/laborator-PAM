@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
-import '../../data/models/home_models.dart';
+import '../../domain/entities/home_feed.dart';
 import '../navigation.dart';
 import '../widgets/featured_card.dart';
 import '../widgets/simple_top_bar.dart';

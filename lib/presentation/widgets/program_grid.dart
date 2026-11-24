@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data/models/home_models.dart';
+import '../../domain/entities/home_feed.dart';
 import 'program_card.dart';
 
 /// Grila cu 2 coloane de carduri de program (refolosită pe mai multe ecrane).

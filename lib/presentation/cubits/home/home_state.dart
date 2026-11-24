@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-import '../../data/models/home_models.dart';
+import '../../../domain/entities/home_feed.dart';
 import '../load_status.dart';
-import '../programs/program_query.dart';
+import '../../../domain/usecases/filter_programs.dart';
 
 class HomeState extends Equatable {
   const HomeState({
@@ -13,7 +13,7 @@ class HomeState extends Equatable {
   });
 
   final LoadStatus status;
-  final FitnessHome? home;
+  final HomeFeed? home;
   final String selectedFilterId;
   final String? errorMessage;
 
@@ -33,7 +33,7 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     LoadStatus? status,
-    FitnessHome? home,
+    HomeFeed? home,
     String? selectedFilterId,
     String? errorMessage,
   }) =>

@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../../data/models/home_models.dart';
-import '../../logic/favorites/favorites_cubit.dart';
-import '../../logic/programs/program_query.dart';
-import '../../logic/programs/programs_cubit.dart';
-import '../../logic/programs/programs_state.dart';
+import '../../domain/entities/home_feed.dart';
+import '../cubits/favorites/favorites_cubit.dart';
+import '../../domain/usecases/filter_programs.dart';
+import '../cubits/programs/programs_cubit.dart';
+import '../cubits/programs/programs_state.dart';
 import '../navigation.dart';
 import '../widgets/category_chip.dart';
 import '../widgets/program_grid.dart';

@@ -1,4 +1,4 @@
-import '../../data/models/home_models.dart';
+import '../entities/home_feed.dart';
 
 /// Opțiunile de sortare pentru lista de programe.
 enum ProgramSort {
@@ -14,7 +14,7 @@ enum ProgramSort {
 }
 
 /// Aplică filtrul, căutarea, „doar favorite” și sortarea asupra programelor.
-/// Funcție pură — o folosesc atât HomeCubit, cât și ProgramsCubit.
+/// Logică de business pură (domain) — o folosesc HomeCubit și ProgramsCubit.
 List<WorkoutProgram> applyProgramQuery(
   List<WorkoutProgram> programs, {
   ProgramFilter? filter,
